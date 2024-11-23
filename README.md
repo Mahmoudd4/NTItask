@@ -11,3 +11,7 @@ Then I created a stage called GETGITREPO and Build Docker Image for building the
 I then ssh into the instance and <<EOF was not working with me so instead I added "" after I ssh and also another "" at the end of my commands, as if I did not do that, these commands were being written outside of the ec2 instance after I got inside it which I did not want.
 I then pulled the image and ran it.
 Here is an image for the docker container which was created inside the EC2 instance from my jenkins pipeline:
+![Screenshot](./myyimages/MyContainer.png)
+
+And here are some screenshots for the output of my jenkins pipeline:
+
