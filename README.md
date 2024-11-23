@@ -15,6 +15,7 @@ Here is an image for the docker container which was created inside the EC2 insta
 
 And here are some screenshots for the output of my jenkins pipeline:
 ![Screenshot](./myyimages/Outpu1.png)
+
 As well as:
 ![Screenshot](./myyimages/Output2.png)
 
