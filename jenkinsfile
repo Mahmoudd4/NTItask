@@ -1,0 +1,44 @@
+pipeline{
+    agent any
+    environment{
+        EC2_HOST= 'ec2-52-73-65-200.compute-1.amazonaws.com'
+        PEM_FILE= credentials('mypemkey')
+    }
+    stages{
+        stage('GETGITREPO'){
+            steps{
+                git branch: 'main' , url: 'https://github.com/Mahmoudd4/NTItask.git'
+            }
+        }
+        stage('Build Docker Image'){
+            steps{
+                script{
+                    docker.build('hello-world')
+                }
+            }
+        }
+        stage('Push to Docker Hub'){
+            steps{
+                script{
+                    docker.withRegistry('','dockercred'){
+                        sh 'docker tag hello-world mahmoud1101/myrepo:latest'
+                        sh 'docker push mahmoud1101/myrepo:latest'
+                    }
+                }
+            }
+        }
+        stage('Deploy to EC2'){
+            steps{
+                script{
+                        sh """
+                        ssh -o StrictHostKeyChecking=no -i ${PEM_FILE} ec2-user@${EC2_HOST} "
+                        docker pull mahmoud1101/myrepo:latest
+                        docker run -d --name Mahmoudddcontainerr -p 3095:3000 mahmoud1101/myrepo:latest
+                        docker image prune -f
+                    "
+                        """
+                }
+            }
+        }
+    }
+}
